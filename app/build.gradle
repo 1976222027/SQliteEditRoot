@@ -38,6 +38,8 @@ android {
         debug {
             buildConfigField("String", "apkBuildTime", "\"${currentTime}\"")
             minifyEnabled false
+            // 为了不和 release 版本冲突
+            //applicationIdSuffix ".debug"
             proguardFiles getDefaultProguardFile('proguard-android.txt'),'proguard-rules.pro'
         }
     }
@@ -59,7 +61,7 @@ dependencies {
 }
 
 static def getMyVersionCode() {
-    return Integer.parseInt(new SimpleDateFormat("yyMMdd").format(new Date()))
+    return Integer.parseInt(new SimpleDateFormat("yyMMddHHmm").format(new Date()))*10+"git rev-list --all --count".execute().getText().toInteger()
 }
 
 static def getMyVersionName() {
@@ -81,7 +83,7 @@ static def getVersionName() {
 
 //    return "$aa.$i.$today.$str"//"3.276"+str+    //3.1.20181015.内容
 //     return "3"+"."+i+"."+today+"."+str
-     return "3"+"."+today
+     return "3."+today
 
 }
 
