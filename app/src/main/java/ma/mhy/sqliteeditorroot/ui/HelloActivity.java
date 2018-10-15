@@ -92,11 +92,12 @@ public class HelloActivity extends AppCompatActivity {
         // Log.v(tag,"获取Root权限:"+b);
         //检测设备是否root 并获取root权限
         get_root();
-        tvShow = findViewById(R.id.tv_show);
-        tvShow.setText(BuildConfig.apkBuildTime);
+
         tvVer = findViewById(R.id.tv_ver);
         tvVer.setText(String.format(getResources().getString(R.string.version_show), PackUtils.getVersionName(this), PackUtils.getVersionCode(this)));
 //tvVer.setText(PackUtils.getVersionName(this)+PackUtils.getVersionCode(this));
+        tvShow = findViewById(R.id.tv_show);
+        tvShow.setText(String.format(getResources().getString(R.string.version_time), BuildConfig.apkBuildTime));
         findViewById(R.id.action_ok).setOnClickListener(v ->
                 new AlertDialog.Builder(HelloActivity.this)
                         .setCancelable(false)
@@ -181,7 +182,7 @@ public class HelloActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         startActivity(new Intent(Intent.ACTION_VIEW)
-                .setData(Uri.parse("https://github.com/1976222027/SQLiteRoot"))
+                .setData(Uri.parse("https://github.com/1976222027/SQLiteEditRoot"))
                 .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
         return true;
     }

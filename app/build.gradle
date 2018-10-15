@@ -14,8 +14,8 @@ android {
         applicationId "ma.mhy.sqliteeditorroot"
         minSdkVersion 15
         targetSdkVersion 28
-        versionCode getVersionCode()
-        versionName getVersionName()
+        versionCode getMyVersionCode()
+        versionName getMyVersionName()
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     //release版本输出包名自动追加版本号和版本名称
@@ -58,13 +58,13 @@ dependencies {
 //    implementation 'androidx.annotation:annotation:1.0.0'
 }
 
-//static def getMyVersionCode() {
-//    return Integer.parseInt(new SimpleDateFormat("yyMMdd").format(new Date()))
-//}
-//
-//static def getMyVersionName() {
-//    return "1.0.6." + "git describe --always".execute().getText().trim()
-//}
+static def getMyVersionCode() {
+    return Integer.parseInt(new SimpleDateFormat("yyMMdd").format(new Date()))
+}
+
+static def getMyVersionName() {
+    return "1.0.6." + "git describe --always".execute().getText().trim()
+}
 //设置发布时的版本号
 
 static def getVersionName() {
