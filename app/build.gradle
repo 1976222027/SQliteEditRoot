@@ -71,19 +71,19 @@ dependencies {
 
 static def getVersionName() {
 
-
-    int i ="git rev-list --count HEAD".execute().getText().toInteger()//build次数
-
+//    int i ="git rev-list --count HEAD".execute().getText().toInteger()//build次数
+//
     String today =new Date().format("yyMMdd")
-
-    Process process ="git describe --always".execute()
-
-    process.waitFor()
-
-    String str = process.getText().trim()
+//
+//    Process process ="git describe --always".execute()
+//
+//    process.waitFor()
+//
+//    String str = process.getText().trim()
 
 //    return "$aa.$i.$today.$str"//"3.276"+str+    //3.1.20181015.内容
-     return 3+"."+i+"."+"."+today+"."+str
+//     return "3"+"."+i+"."+today+"."+str
+     return "3"+"."+today
 
 }
 
@@ -91,12 +91,12 @@ static def getVersionName() {
 
 static def getVersionCode() {
 
-    Process process ="git rev-list --count HEAD".execute()
+//    Process process ="git rev-list --count HEAD".execute()
+//
+//    process.waitFor()
+//
+//    int i = process.getText().toInteger()
 
-    process.waitFor()
-
-    int i = process.getText().toInteger()
-
-    return Integer.parseInt(new SimpleDateFormat("yyMMdd").format(new Date()))*10000 +i//今天日期1810150001+次数
+    return Integer.parseInt(new SimpleDateFormat("yyMMdd").format(new Date()))//今天日期1810150001+次数
 
 }
