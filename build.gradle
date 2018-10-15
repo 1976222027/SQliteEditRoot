@@ -1,12 +1,12 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
-    repositories {
+    repositories {  //repositories{}闭包：配置远程仓库
         google()
         jcenter()
         
     }
-    dependencies {
+    dependencies {//配置构建工具
         classpath 'com.android.tools.build:gradle:3.3.0-alpha13'
         
         // NOTE: Do not place your application dependencies here; they belong
@@ -14,7 +14,7 @@ buildscript {
     }
 }
 
-allprojects {
+allprojects {//这里是项目本身需要的依赖，比如项目所需的maven库
     repositories {
         google()
         jcenter()

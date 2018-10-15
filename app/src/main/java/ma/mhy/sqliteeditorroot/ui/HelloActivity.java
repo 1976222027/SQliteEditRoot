@@ -97,7 +97,7 @@ public class HelloActivity extends AppCompatActivity {
         tvVer.setText(String.format(getResources().getString(R.string.version_show), PackUtils.getVersionName(this), PackUtils.getVersionCode(this)));
 //tvVer.setText(PackUtils.getVersionName(this)+PackUtils.getVersionCode(this));
         tvShow = findViewById(R.id.tv_show);
-        tvShow.setText(String.format(getResources().getString(R.string.version_time), BuildConfig.apkBuildTime));
+        tvShow.setText(String.format(getResources().getString(R.string.version_time), BuildConfig.apkBuildTime));//yyyyMMdd
         findViewById(R.id.action_ok).setOnClickListener(v ->
                 new AlertDialog.Builder(HelloActivity.this)
                         .setCancelable(false)
