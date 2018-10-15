@@ -12,12 +12,15 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.DataOutputStream;
 import java.io.File;
 
+import ma.mhy.sqliteeditorroot.BuildConfig;
 import ma.mhy.sqliteeditorroot.R;
+import ma.mhy.sqliteeditorroot.util.PackUtils;
 import ma.mhy.sqliteeditorroot.util.RequstRoot;
 
 //import androidx.annotation.Nullable;
@@ -25,27 +28,39 @@ import ma.mhy.sqliteeditorroot.util.RequstRoot;
 
 public class HelloActivity extends AppCompatActivity {
     ProgressDialog progress_dialog;
-String tag="mhy";
+    String tag = "mhy";
+    TextView tvVer, tvShow;
+
 //String apkRoot = "chmod 777 " + getPackageCodePath();//getPackageCodePath()来获得当前应用程序对应的 apk 文件的路径
 
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_about);
-        //当前应用的代码执行目录
-       // upgradeRootPermission(getPackageCodePath());
-       // boolean b = RootCommand(apkRoot);//给这个路径777权限
-       // Log.v(tag,"获取Root权限:"+b);
-        //检测设备是否root 并获取root权限
-        get_root();
-
-        findViewById(R.id.action_ok).setOnClickListener(v ->
-                new AlertDialog.Builder(HelloActivity.this)
-                        .setCancelable(false)
-                        .setMessage(R.string.app_notice)
-                        .setPositiveButton(R.string.action_know, (dialog, which) -> finish())
-                        .create()
-                        .show());
+    /**
+     * 应用程序运行命令获取 Root权限，设备必须已破解(获得ROOT权限)
+     *
+     * @return 应用程序是/否获取Root权限
+     */
+    public static boolean upgradeRootPermission(String pkgCodePath) {
+        Process process = null;
+        DataOutputStream os = null;
+        try {
+            String cmd = "chmod 777 " + pkgCodePath;
+            process = Runtime.getRuntime().exec("su"); //切换到root帐号
+            os = new DataOutputStream(process.getOutputStream());
+            os.writeBytes(cmd + "\n");
+            os.writeBytes("exit\n");
+            os.flush();
+            process.waitFor();
+        } catch (Exception e) {
+            return false;
+        } finally {
+            try {
+                if (os != null) {
+                    os.close();
+                }
+                process.destroy();
+            } catch (Exception e) {
+            }
+        }
+        return true;
     }
 
     // 判断是否具有ROOT权限
@@ -67,14 +82,38 @@ String tag="mhy";
         return res;
     }
 
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_about);
+        //当前应用的代码执行目录
+        // upgradeRootPermission(getPackageCodePath());
+        // boolean b = RootCommand(apkRoot);//给这个路径777权限
+        // Log.v(tag,"获取Root权限:"+b);
+        //检测设备是否root 并获取root权限
+        get_root();
+        tvShow = findViewById(R.id.tv_show);
+        tvShow.setText(BuildConfig.apkBuildTime);
+        tvVer = findViewById(R.id.tv_ver);
+        tvVer.setText(String.format(getResources().getString(R.string.version_show), PackUtils.getVersionName(this), PackUtils.getVersionCode(this)));
+//tvVer.setText(PackUtils.getVersionName(this)+PackUtils.getVersionCode(this));
+        findViewById(R.id.action_ok).setOnClickListener(v ->
+                new AlertDialog.Builder(HelloActivity.this)
+                        .setCancelable(false)
+                        .setMessage(R.string.app_notice)
+                        .setPositiveButton(R.string.action_know, (dialog, which) -> finish())
+                        .create()
+                        .show());
+    }
+
     // 获取ROOT权限.获取Android的ROOT权限其实很简单，只要在Runtime下执行命令"su"就可以了。
-    public  void get_root() {
+    public void get_root() {
 
         if (is_root()) {
             Toast.makeText(this, "请授予ROOT权限!", Toast.LENGTH_LONG).show();
 
             //请求root权限
-            String apkRoot="chmod 777 "+getPackageCodePath();
+            String apkRoot = "chmod 777 " + getPackageCodePath();
             RequstRoot.RootCommand(apkRoot);//
 
         } else {
@@ -87,35 +126,7 @@ String tag="mhy";
             }
         }
     }
-    /**
-     * 应用程序运行命令获取 Root权限，设备必须已破解(获得ROOT权限)
-     *
-     * @return 应用程序是/否获取Root权限
-     */
-    public static boolean upgradeRootPermission(String pkgCodePath) {
-        Process process = null;
-        DataOutputStream os = null;
-        try {
-            String cmd="chmod 777 " + pkgCodePath;
-            process = Runtime.getRuntime().exec("su"); //切换到root帐号
-            os = new DataOutputStream(process.getOutputStream());
-            os.writeBytes(cmd + "\n");
-            os.writeBytes("exit\n");
-            os.flush();
-            process.waitFor();
-        } catch (Exception e) {
-            return false;
-        } finally {
-            try {
-                if (os != null) {
-                    os.close();
-                }
-                process.destroy();
-            } catch (Exception e) {
-            }
-        }
-        return true;
-    }
+
     /**
      * 应用程序运行命令获取 Root权限，设备必须已破解(获得ROOT权限)
      *
@@ -161,7 +172,6 @@ String tag="mhy";
 //        Log.d(tag,tag + "222 SUCCESS");
 //        return true;
 //    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.hello, menu);

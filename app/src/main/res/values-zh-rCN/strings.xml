@@ -25,4 +25,5 @@
     <string name="hint_sql">在此输入SQL语句</string>
     <string name="err_primary_key">未定义唯一键</string>
     <string name="err_blob_data">不能编辑BLOB数据</string>
+    <string name="version_show">%1$s(%2$s)</string>
 </resources>

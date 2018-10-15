@@ -25,4 +25,5 @@
     <string name="hint_sql">Type SQL statements here</string>
     <string name="err_primary_key">There is no physical unique key defined</string>
     <string name="err_blob_data">Cannot edit BLOB data</string>
+    <string name="version_show">%1$s(%2$s)</string>
 </resources>

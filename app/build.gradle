@@ -1,6 +1,12 @@
 import java.text.SimpleDateFormat
-
+import java.text.DateFormat
 apply plugin: 'com.android.application'
+def currentTime = getCurrentTime();
+
+static def getCurrentTime() {
+    DateFormat df = new SimpleDateFormat("yyMMdd")
+    return df.format(Calendar.getInstance(Locale.CHINA).getTime())
+}
 
 android {
     compileSdkVersion 28
@@ -13,34 +19,26 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     //release版本输出包名自动追加版本号和版本名称
-
     applicationVariants.all {
-
         variant ->
-
             variant.outputs.all {
-
                 if (buildType.name == 'release') {
-
                     outputFileName = "app_v" + defaultConfig.versionName + "_" + new Date().format("yyyy-MM-dd") + "_" + buildType.name + ".apk"
-
                 }
-
             }
     }
     buildTypes {
         release {
 //            buildConfigField("boolean","API_DEBUG","false")
-            buildConfigField("String", "releaseTime", "\""+new Date().format("yyyy/MM/dd HH:mm:ss")+"\"")//buildtime
+            buildConfigField("String", "apkBuildTime", "\"${currentTime}\"")
+          //  buildConfigField("String", "releaseTime", "\""+new Date().format("yyyy/MM/dd HH:mm:ss", TimeZone.getTimeZone("UTC"))+"\"")//buildtime
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         debug {
-
-            buildConfigField("boolean","API_DEBUG","true")
+            buildConfigField("String", "apkBuildTime", "\"${currentTime}\"")
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'),'proguard-rules.pro'
-
         }
     }
     compileOptions {
