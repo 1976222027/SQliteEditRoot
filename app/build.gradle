@@ -127,9 +127,9 @@ dependencies {
 }
 
 static def getMyVersionCode() {
-    return Integer.parseInt(new SimpleDateFormat("yyMMddHHmm").format(new Date()))+"git rev-list  --count HEAD".execute().getText().toInteger()
-}
-
+    return Integer.parseInt(new SimpleDateFormat("yyMMddHHmm").format(new Date()))+"git rev-list  --count HEAD".execute().getText().toInteger()//当前分支提交总数
+}//仓库提交总数git rev-list --all --count
+//git describe --tags  --dirty
 static def getMyVersionName() {
     return "1.0.6." + "git describe --always".execute().getText().trim()
 }
