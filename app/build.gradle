@@ -8,14 +8,38 @@ android {
         applicationId "ma.mhy.sqliteeditorroot"
         minSdkVersion 15
         targetSdkVersion 28
-        versionCode getMyVersionCode()
-        versionName getMyVersionName()
+        versionCode getVersionCode()
+        versionName getVersionName()
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    //release版本输出包名自动追加版本号和版本名称
+
+    applicationVariants.all {
+
+        variant ->
+
+            variant.outputs.all {
+
+                if (buildType.name == 'release') {
+
+                    outputFileName = "app_v" + defaultConfig.versionName + "_" + new Date().format("yyyy-MM-dd") + "_" + buildType.name + ".apk"
+
+                }
+
+            }
     }
     buildTypes {
         release {
+            buildConfigField("boolean","API_DEBUG","false")
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug {
+
+            buildConfigField("boolean","API_DEBUG","true")
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'),'proguard-rules.pro'
+
         }
     }
     compileOptions {
@@ -35,10 +59,44 @@ dependencies {
 //    implementation 'androidx.annotation:annotation:1.0.0'
 }
 
-static def getMyVersionCode() {
-    return Integer.parseInt(new SimpleDateFormat("yyMMdd").format(new Date()))
+//static def getMyVersionCode() {
+//    return Integer.parseInt(new SimpleDateFormat("yyMMdd").format(new Date()))
+//}
+//
+//static def getMyVersionName() {
+//    return "1.0.6." + "git describe --always".execute().getText().trim()
+//}
+//设置发布时的版本号
+
+static def getVersionName() {
+
+    int aa =3
+
+    int i ="git rev-list --count HEAD".execute().getText().toInteger()//build次数
+
+    String today =new Date().format("yyMMdd")
+
+    Process process ="git describe --always".execute()
+
+    process.waitFor()
+
+    String str = process.getText().trim()
+
+//    return "$aa.$i.$today.$str"//"3.276"+str+    //3.1.20181015.内容
+     return aa+"."+i+"."+"."+today+"."+str
+
 }
 
-static def getMyVersionName() {
-    return "1.0.6." + "git describe --always".execute().getText().trim()
+//设置发布时的版本码
+
+static def getVersionCode() {
+
+    Process process ="git rev-list --count HEAD".execute()
+
+    process.waitFor()
+
+    int i = process.getText().toInteger()
+
+    return Integer.parseInt(new SimpleDateFormat("yyMMdd").format(new Date()))*10000 +i//今天日期1810150001+次数
+
 }

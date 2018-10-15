@@ -4,7 +4,7 @@
     <string name="app_intro">
         "SQLite Editor" used to create/retrieve/update/delete SQLite Database\n\n
         Notice: the application icon WILL NOT appear in the launcher.\n\n
-        Copyright © 2017&#8211;2018 Yaerin All rights reserved.\n
+        Copyright © 2017&#8211;2018 mahongyin All rights reserved.\n
     </string>
     <string name="app_notice">Notice: the application icon WILL NOT appear in the launcher.</string>
     <string name="action_know">I know</string>

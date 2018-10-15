@@ -4,22 +4,18 @@ package ma.mhy.sqliteeditorroot.ui;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.ComponentName;
-
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
-import java.io.IOException;
 
 import ma.mhy.sqliteeditorroot.R;
 import ma.mhy.sqliteeditorroot.util.RequstRoot;
@@ -123,7 +119,7 @@ String tag="mhy";
     /**
      * 应用程序运行命令获取 Root权限，设备必须已破解(获得ROOT权限)
      *
-     * @param command 命令：String apkRoot="chmod 777 "+getPackageCodePath(); RootCommand(apkRoot);
+     * @param ：String apkRoot="chmod 777 "+getPackageCodePath(); RootCommand(apkRoot);
      * @return 应用程序是/否获取Root权限
      */
 //    public boolean RootCommand(String command) {
@@ -175,7 +171,7 @@ String tag="mhy";
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         startActivity(new Intent(Intent.ACTION_VIEW)
-                .setData(Uri.parse("https://github.com/Yaerin/SQLiteEditor"))
+                .setData(Uri.parse("https://github.com/1976222027/SQLiteRoot"))
                 .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
         return true;
     }
