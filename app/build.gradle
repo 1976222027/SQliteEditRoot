@@ -30,7 +30,8 @@ android {
     }
     buildTypes {
         release {
-            buildConfigField("boolean","API_DEBUG","false")
+//            buildConfigField("boolean","API_DEBUG","false")
+            buildConfigField("String", "releaseTime", "\""+new Date().format("yyyy/MM/dd HH:mm:ss")+"\"")//buildtime
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
@@ -70,7 +71,6 @@ dependencies {
 
 static def getVersionName() {
 
-    int aa =3
 
     int i ="git rev-list --count HEAD".execute().getText().toInteger()//build次数
 
@@ -83,7 +83,7 @@ static def getVersionName() {
     String str = process.getText().trim()
 
 //    return "$aa.$i.$today.$str"//"3.276"+str+    //3.1.20181015.内容
-     return aa+"."+i+"."+"."+today+"."+str
+     return 3+"."+i+"."+"."+today+"."+str
 
 }
 
